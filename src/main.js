@@ -43,7 +43,10 @@ async function render(action) {
     // result = applySearching(result, state, action);
     // result = applyFiltering(result, state, action);
     // result = applySorting(result, state, action);
+
+    query = applyFiltering(query, state, action); // result заменяем на query
     query = applyPagination(query, state, action); // обновляем query
+
 
     const { total, items } = await api.getRecords(query); // запрашиваем данные с собранными параметрами
 
@@ -73,10 +76,8 @@ const sampleTable = initTable({
 //     sampleTable.header.elements.sortByTotal
 // ]);
 
-// import { initFiltering } from './components/filtering.js';
-// const applyFiltering = initFiltering(sampleTable.filter.elements, {
-//     searchBySeller: indexes.sellers   // передаём массив продавцов
-// });
+import { initFiltering } from './components/filtering.js';
+const {applyFiltering, updateIndexes} = initFiltering(sampleTable.filter.elements);
 
 // инициализация модуля пагинации
 const {applyPagination, updatePagination} = initPagination(
@@ -97,6 +98,10 @@ appRoot.appendChild(sampleTable.container);
 
 async function init() {
     const indexes = await api.getIndexes();
+
+    updateIndexes(sampleTable.filter.elements, {
+        searchBySeller: indexes.sellers
+    });
 }
 
 init().then(render);

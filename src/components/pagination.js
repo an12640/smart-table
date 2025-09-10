@@ -42,10 +42,9 @@ export const initPagination = ({pages, fromRow, toRow, totalRows}, createPage) =
         }));
 
         // @todo: #2.5 — обновить статус пагинации
-        // что-то не работало со skip пришлось закомментить. потом убрать!! 
-        // fromRow.textContent = skip + 1;
-        // toRow.textContent = Math.min(page * limit, data.length);
-        // totalRows.textContent = data.length;
+        fromRow.textContent = skip + 1;
+        toRow.textContent = Math.min(page * limit, total);
+        totalRows.textContent = total;
     }
 
     return {
