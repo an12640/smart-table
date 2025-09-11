@@ -10,6 +10,20 @@ import { initFiltering } from "./components/filtering.js";
 import { initSorting } from "./components/sorting.js";
 import { initPagination } from "./components/pagination.js";
 
+// Исходные данные используемые в render()
+const api = initData();
+
+// инициализация таблицы с пагинацией
+const sampleTable = initTable(
+    {
+        tableTemplate: "table",
+        rowTemplate: "row",
+        before: ["search", "header", "filter"],
+        after: ["pagination"], // подключаем шаблон пагинации
+    },
+    render,
+);
+
 const applySearching = initSearching(
     sampleTable.search.elements.search, // элемент поиска (имя из шаблона search)
     "search", // имя поля в state (оно должно совпадать с атрибутом name у input)
@@ -58,20 +72,6 @@ function collectState() {
  * Перерисовка состояния таблицы при любых изменениях
  * @param {HTMLButtonElement?} action
  */
-
-// Исходные данные используемые в render()
-const api = initData();
-
-// инициализация таблицы с пагинацией
-const sampleTable = initTable(
-    {
-        tableTemplate: "table",
-        rowTemplate: "row",
-        before: ["search", "header", "filter"],
-        after: ["pagination"], // подключаем шаблон пагинации
-    },
-    render,
-);
 
 async function render(action) {
     let state = collectState(); // состояние полей из таблицы

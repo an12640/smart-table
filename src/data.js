@@ -8,13 +8,17 @@ export function initData() {
     let lastQuery;
 
     // функция для приведения строк в тот вид, который нужен нашей таблице
-    const mapRecords = (data) => data.map(item => ({
-        id: item.receipt_id,
-        date: item.date,
-        seller: sellers[item.seller_id],
-        customer: customers[item.customer_id],
-        total: item.total_amount
-    }));
+    const mapRecords = (data = []) => {
+        if (!Array.isArray(data)) return [];
+
+        return data.map(item => ({
+            id: item?.receipt_id ?? null,
+            date: item?.date ?? "",
+            seller: sellers?.[item?.seller_id] ?? "Неизвестный продавец",
+            customer: customers?.[item?.customer_id] ?? "Неизвестный клиент",
+            total: item?.total_amount ?? 0
+        }));
+    };
 
     // функция получения индексов
     const getIndexes = async () => {
