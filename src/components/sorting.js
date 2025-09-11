@@ -1,4 +1,4 @@
-import {sortMap} from "../lib/sort.js";
+import { sortMap } from "../lib/sort.js";
 /**
  * Инициализация сортировки для таблицы
  * @param {HTMLElement[]} columns — массив кнопок сортировки
@@ -10,7 +10,7 @@ export function initSorting(columns) {
         let order = null;
 
         // @todo: #3.1 — обработка клика по кнопке сортировки
-        if (action && action.name === 'sort') {
+        if (action && action.name === "sort") {
             // Ротация значения кнопки через карту переходов
             action.dataset.value = sortMap[action.dataset.value];
 
@@ -19,22 +19,22 @@ export function initSorting(columns) {
             order = action.dataset.value;
 
             // @todo: #3.2 — сброс остальных кнопок
-            columns.forEach(column => {
+            columns.forEach((column) => {
                 if (column.dataset.field !== action.dataset.field) {
-                    column.dataset.value = 'none';
+                    column.dataset.value = "none";
                 }
             });
         } else {
             // @todo: #3.3 — определяем активную сортировку при перерисовке
-            columns.forEach(column => {
-                if (column.dataset.value !== 'none') {
+            columns.forEach((column) => {
+                if (column.dataset.value !== "none") {
                     field = column.dataset.field;
                     order = column.dataset.value;
                 }
             });
         }
 
-        const sort = (field && order !== 'none') ? `${field}:${order}` : null; // сохраним в переменную параметр сортировки в виде field:direction
+        const sort = field && order !== "none" ? `${field}:${order}` : null; // сохраним в переменную параметр сортировки в виде field:direction
         return sort ? Object.assign({}, query, { sort }) : query; // по общему принципу, если есть сортировка, добавляем, если нет, то не трогаем query
-    }
-};
+    };
+}
