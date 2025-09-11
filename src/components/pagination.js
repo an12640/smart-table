@@ -32,7 +32,6 @@ export const initPagination = ({pages, fromRow, toRow, totalRows}, createPage) =
 
         // @todo: #2.2 — посчитать сколько строк нужно пропустить и получить срез данных
         const skip = (page - 1) * limit;
-        // const pageData = data.slice(skip, skip + rowsPerPage);
 
         // @todo: #2.4 — получить список видимых страниц и вывести их
         const visiblePages = getPages(page, pageCount, 5);
