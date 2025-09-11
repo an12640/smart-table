@@ -43,9 +43,11 @@ async function render(action) {
     // result = applySearching(result, state, action);
     // result = applyFiltering(result, state, action);
     // result = applySorting(result, state, action);
-
+    query = applySearching(query, state, action); // result заменяем на query
     query = applyFiltering(query, state, action); // result заменяем на query
+    query = applySorting(query, state, action); // result заменяем на query
     query = applyPagination(query, state, action); // обновляем query
+    
 
 
     const { total, items } = await api.getRecords(query); // запрашиваем данные с собранными параметрами
@@ -63,18 +65,18 @@ const sampleTable = initTable({
     after: ['pagination']   // подключаем шаблон пагинации
 }, render);
 
-// import { initSearching } from './components/searching.js';
-// const applySearching = initSearching(
-//     sampleTable.search.elements.search, // элемент поиска (имя из шаблона search)
-//     'search' // имя поля в state (оно должно совпадать с атрибутом name у input)
-// );
+import { initSearching } from './components/searching.js';
+const applySearching = initSearching(
+    sampleTable.search.elements.search, // элемент поиска (имя из шаблона search)
+    'search' // имя поля в state (оно должно совпадать с атрибутом name у input)
+);
 
 
-// import { initSorting } from './components/sorting.js';
-// const applySorting = initSorting([
-//     sampleTable.header.elements.sortByDate,
-//     sampleTable.header.elements.sortByTotal
-// ]);
+import { initSorting } from './components/sorting.js';
+const applySorting = initSorting([
+    sampleTable.header.elements.sortByDate,
+    sampleTable.header.elements.sortByTotal
+]);
 
 import { initFiltering } from './components/filtering.js';
 const {applyFiltering, updateIndexes} = initFiltering(sampleTable.filter.elements);
